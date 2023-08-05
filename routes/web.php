@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\StudentController;
 use App\Models\student;
 use Illuminate\Support\Facades\Route;
 
@@ -81,4 +82,9 @@ Route::get('/405', function(){
 Route::get('/500', function(){
     return view('contents.error-500');
 });
+Route::get('/create', [StudentController::class, 'create']);
+Route::post('/store', [StudentController::class, 'store']);
+Route::get('edit/{id}', [StudentController::class, 'edit']);
+Route::put('/update/{id}', [StudentController::class, 'update']);
+Route::delete('/delete/{id}', [StudentController::class, 'destroy']);
 

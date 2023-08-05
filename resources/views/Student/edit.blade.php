@@ -14,7 +14,7 @@
       content="Matrix Admin Lite Free Version is powerful and clean admin dashboard template, inpired from Bootstrap Framework"
     />
     <meta name="robots" content="noindex,nofollow" />
-    <title>Tables</title>
+    <title>Ubah data</title>
 
     <link
       rel="icon"
@@ -58,7 +58,7 @@
         <div class="page-breadcrumb">
           <div class="row">
             <div class="col-12 d-flex no-block align-items-center">
-              <h4 class="page-title"></h4>
+              <h4 class="page-title">Update data</h4>
               <div class="ms-auto text-end">
                 <nav aria-label="breadcrumb">
                   <ol class="breadcrumb">
@@ -72,7 +72,42 @@
             </div>
           </div>
         </div>
-        @include('partial.table')
+        <form action="/update/{{$student->id}}" method="post" class="m-3">
+            @csrf
+            @method('put');
+
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Nama Lengkap</span>
+                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" name="nama" value="{{$student->nama}}">
+              </div>
+              <label for="">Jenis kelamin</label>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="jenkel" id="flexRadioDefault1" value="laki-laki" checked>
+                <label class="form-check-label" for="flexRadioDefault1">
+                  Laki-laki
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="jenkel" id="flexRadioDefault2" value="perempuan" checked>
+                <label class="form-check-label" for="flexRadioDefault2">
+                 Perempuan
+                </label>
+              </div>
+              <div class="input-group mb-3">
+                  <span class="input-group-text" id="inputGroup-sizing-default">Tempat</span>
+                  <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" name="tempat" value="{{$student->tempat_lahir}}" >
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Tanggal</span>
+                    <input type="date" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" name="tanggal">
+                  </div>
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Alamat</span>
+                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" name="alamat" value="{{$student->alamat}}">
+                  </div>
+                <button type="submit" class="btn btn-info mt-2">Tambah Data</button>
+        </form>
+
         <footer class="footer text-center">
           All Rights Reserved by Matrix-admin. Designed and Developed by
           <a href="https://www.wrappixel.com">WrapPixel</a>.
