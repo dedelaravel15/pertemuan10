@@ -2,10 +2,11 @@
     <div>
       <div class="text-center pt-3 pb-3">
         <span class="db"
-          ><img src="../assets/images/logo.png" alt="logo"
+          ><img src="{{asset('/assets/images/logo.png')}}" alt="logo"
         /></span>
       </div>
-      <form class="form-horizontal mt-3" action="index.html">
+      <form class="form-horizontal mt-3" action="{{route('signup')}}" method="POST">
+        @csrf
         <div class="row pb-4">
           <div class="col-12">
             <div class="input-group mb-3">
@@ -23,7 +24,11 @@
                 aria-label="Username"
                 aria-describedby="basic-addon1"
                 required
+                name="name"
               />
+              @error('name')
+              <p style="color:white;">{{$message}}</p>
+            @enderror
             </div>
             <!-- email -->
             <div class="input-group mb-3">
@@ -40,8 +45,12 @@
                 placeholder="Email Address"
                 aria-label="Username"
                 aria-describedby="basic-addon1"
+                name="email"
                 required
               />
+              @error('email')
+              <p style="color:white;">{{$message}}</p>
+            @enderror
             </div>
             <div class="input-group mb-3">
               <div class="input-group-prepend">
@@ -52,33 +61,22 @@
                 ></span>
               </div>
               <input
-                type="text"
+                type="password"
                 class="form-control form-control-lg"
                 placeholder="Password"
                 aria-label="Password"
                 aria-describedby="basic-addon1"
+                name="password"
                 required
               />
             </div>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span
-                  class="input-group-text bg-info text-white h-100"
-                  id="basic-addon2"
-                  ><i class="mdi mdi-lock fs-4"></i
-                ></span>
-              </div>
-              <input
-                type="text"
-                class="form-control form-control-lg"
-                placeholder=" Confirm Password"
-                aria-label="Password"
-                aria-describedby="basic-addon1"
-                required
-              />
+            @error('password')
+            <p style="color:white;">{{$message}}</p>
+          @enderror
             </div>
           </div>
         </div>
+
         <div class="row border-top border-secondary">
           <div class="col-12">
             <div class="form-group">

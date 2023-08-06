@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\AuthController;
 use App\Models\student;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Psy\TabCompletion\AutoCompleter;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,9 +18,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('contents.dashboard');
-});
+
 Route::get('/charts', function () {
     return view('contents.charts');
 });
@@ -64,12 +65,10 @@ Route::get('/pages-invoice', function(){
 Route::get('/pages-chat', function(){
     return view('contents.pages-chat');
 });
-Route::get('/login', function(){
-    return view('contents.authentication-login');
-});
-Route::get('/register', function(){
-    return view('contents.authentication-register');
-});
+// Route::get('/login', function(){
+//     return view('contents.authentication-login');
+// });
+
 Route::get('/403', function(){
     return view('contents.error-403');
 });
@@ -82,9 +81,25 @@ Route::get('/405', function(){
 Route::get('/500', function(){
     return view('contents.error-500');
 });
-Route::get('/create', [StudentController::class, 'create']);
-Route::post('/store', [StudentController::class, 'store']);
-Route::get('edit/{id}', [StudentController::class, 'edit']);
-Route::put('/update/{id}', [StudentController::class, 'update']);
-Route::delete('/delete/{id}', [StudentController::class, 'destroy']);
 
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/', function () {
+    return view('contents.dashboard');
+});
+
+Route::group(['middleware' => ['admin']], function(){
+
+    Route::get('/create', [StudentController::class, 'create']);
+    Route::post('/store', [StudentController::class, 'store']);
+    Route::get('edit/{id}', [StudentController::class, 'edit']);
+    Route::put('/update/{id}', [StudentController::class, 'update']);
+    Route::delete('/delete/{id}', [StudentController::class, 'destroy']);
+
+});
+
+Route::group(['middleware' => ['guest']], function(){
+    Route::get('/login', [AuthController::class, 'index'])->name('login');
+    Route::post('/login', [AuthController::class, 'signIn'])->name('signIn');
+    Route::get('/register', [AuthController::class, 'register'])->name('register');
+    Route::post('/signup', [AuthController::class, 'signup'])->name('signup');
+});
